@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una Invitación Para Ti ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+color:white;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+min-height:100vh;
+padding-top:40px;
+text-align:center;
+overflow-x:hidden;
+overflow-y:auto;
+}
+
+
+.container{
+max-width:500px;
+padding:20px;
+position:relative;
+}
+
+button{
+margin:10px;
+padding:15px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:white;
+color:#ff4f81;
+cursor:pointer;
+transition:.3s;
+}
+
+#btnNo{
+position:absolute;
+top:80%;
+left:10%;
+}
+
+.botones{
+margin-top:20px;
+}
+
+img{
+max-width:100%;
+border-radius:15px;
+margin-top:20px;
+display:none;
+}
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+top:0;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+to{transform:translateY(100vh) rotate(360deg);}
+}
+
+.heart{
+position:absolute;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Hola amor ❤️</h1>
+<p id="mensaje"></p>
+
+<button id="btnInicio" onclick="pregunta()">Haz click aquí 💌</button>
+
+<div class="botones" id="opciones" style="display:none;">
+<button id="btnSi" onclick="acepto()">SI 😍</button>
+</div>
+
+<button id="btnNo" style="display:none;">NO 😅</button>
+
+<img id="fotoFinal" src="foto.png">
+</div>
+
+<script>
+
+let aceptado=false;
+const mensaje=document.getElementById("mensaje");
+const btnNo=document.getElementById("btnNo");
+const btnSi=document.getElementById("btnSi");
+
+function escribir(texto,i=0){
+if(i<texto.length){
+mensaje.innerHTML+=texto.charAt(i);
+setTimeout(()=>escribir(texto,i+1),40);
+}
+}
+
+window.onload=()=>{
+escribir("Tengo algo muy especial que preguntarte...");
+}
+
+function pregunta(){
+mensaje.innerHTML="";
+escribir("¿Te gustaría salir conmigo este 14? 🙈✨");
+document.getElementById("btnInicio").style.display="none";
+document.getElementById("opciones").style.display="block";
+btnNo.style.display="block";
+}
+
+function acepto(){
+aceptado=true;
+mensaje.innerHTML="";
+escribir("Sabía que dirías que sí ❤️✨");
+document.getElementById("fotoFinal").style.display="block";
+confetti();
+}
+
+btnNo.addEventListener("mouseover",moverNo);
+btnNo.addEventListener("touchstart",moverNo);
+
+function moverNo(){
+if(!aceptado){
+
+let x=Math.random()*70;
+let y=Math.random()*70;
+
+btnNo.style.left=x+"%";
+btnNo.style.top=y+"%";
+
+let escala=Math.random()*0.5+0.5;
+btnNo.style.transform=`scale(${escala})`;
+
+let escalaSi=1.2;
+document.getElementById("btnSi").style.transform=`scale(${escalaSi})`;
+}
+}
+
+function confetti(){
+for(let i=0;i<80;i++){
+let c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"vw";
+c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),3000);
+}
+}
+
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+10)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},400);
+
+</script>
+
+</body>
+</html>
